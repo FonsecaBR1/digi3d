@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Digi 3D Store</title>
+<style>
+:root{--bg:#f7f7fb;--card:#fff;--tx:#14141f;--mut:#6b6b80;--bd:#e4e4ee;--hd:#0d0d14;--hdtx:#fff;
+--pu:#6a2c9f;--bl:#2563eb;--gr:#16a34a;--ye:#f5b800;--or:#f97316;--rd:#e11d48;color-scheme:light;
+padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);box-sizing:border-box}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101018;--card:#1b1b27;--tx:#f1f1f8;--mut:#a0a0b8;--bd:#2c2c3c;color-scheme:dark}}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--tx)}
+.stripe{height:5px;background:linear-gradient(90deg,var(--pu),var(--bl),var(--gr),var(--ye),var(--or),var(--rd))}
+header{background:var(--hd);color:var(--hdtx);position:sticky;top:env(safe-area-inset-top,0px);z-index:20}
+.bar{max-width:1100px;margin:auto;display:flex;align-items:center;gap:14px;padding:10px 16px}
+.bar img{height:48px;background:#fff;border-radius:10px;padding:3px}
+.bar .t{font-weight:800;letter-spacing:.5px}.sp{flex:1}
+button{font:inherit;cursor:pointer;border:0;border-radius:10px;padding:10px 16px;font-weight:600}
+.cartbtn{background:var(--bl);color:#fff}.cartbtn b{background:var(--or);border-radius:99px;padding:1px 8px;margin-left:6px}
+main{max-width:1100px;margin:auto;padding:16px}
+.hero{background:linear-gradient(120deg,var(--pu),var(--bl));color:#fff;border-radius:16px;padding:22px;margin-bottom:16px}
+.hero h1{margin:0 0 6px;font-size:1.5rem}.hero p{margin:0;opacity:.9}
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+input,select,textarea{font:inherit;padding:10px 12px;border:1px solid var(--bd);border-radius:10px;background:var(--card);color:var(--tx);width:100%}
+.tools input{flex:1;min-width:180px;width:auto}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:12px}
+.chip{background:var(--card);border:1px solid var(--bd);color:var(--tx);white-space:nowrap}
+.chip.on{background:var(--pu);color:#fff;border-color:var(--pu)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+.p{background:var(--card);border:1px solid var(--bd);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.p .im{aspect-ratio:1;background:var(--bd) center/cover no-repeat;display:grid;place-items:center;color:var(--mut);font-size:.8rem}
+.p .b{padding:12px;display:flex;flex-direction:column;gap:6px;flex:1}
+.p h3{margin:0;font-size:1rem}.p small{color:var(--mut)}
+.price{font-weight:800;color:var(--gr);font-size:1.15rem}
+.add{background:var(--gr);color:#fff;margin-top:auto}.add[disabled]{background:var(--mut);cursor:not-allowed}
+.tag{font-size:.7rem;background:var(--ye);color:#222;border-radius:6px;padding:2px 6px;align-self:flex-start;font-weight:700}
+.empty{text-align:center;color:var(--mut);padding:40px}
+#drawer{position:fixed;inset:0 0 0 auto;width:min(400px,100%);background:var(--card);z-index:40;transform:translateX(105%);transition:.25s;display:flex;flex-direction:column;box-shadow:-8px 0 30px #0005;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+#drawer.open{transform:none}
+#ov{position:fixed;inset:0;background:#0007;z-index:30;display:none}#ov.open{display:block}
+.dh{padding:14px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--bd)}
+.di{flex:1;overflow:auto;padding:12px 16px}
+.ci{display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--bd)}
+.ci .th{width:54px;height:54px;border-radius:8px;background:var(--bd) center/cover;flex:none}
+.ci .n{flex:1;font-size:.9rem}.q{display:flex;align-items:center;gap:6px}
+.q button{padding:2px 10px;background:var(--bd);color:var(--tx)}
+.df{padding:14px 16px;border-top:1px solid var(--bd);display:grid;gap:10px}
+.wa{background:#25d366;color:#04230f;font-size:1rem}
+.tot{display:flex;justify-content:space-between;font-weight:800;font-size:1.1rem}
+footer{text-align:center;color:var(--mut);padding:24px;font-size:.85rem}
+footer a{color:var(--mut)}
+.panel{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px;margin-bottom:16px}
+.panel h2{margin:0 0 12px}.f{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+.f .w{grid-column:1/-1}label{font-size:.8rem;color:var(--mut);display:block;margin-bottom:3px}
+.row{display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--bd);flex-wrap:wrap}
+.row .th{width:48px;height:48px;border-radius:8px;background:var(--bd) center/cover;flex:none}
+.row .n{flex:1;min-width:140px}
+.sm{padding:6px 12px;font-size:.85rem}.bl{background:var(--bl);color:#fff}.rd{background:var(--rd);color:#fff}.pu{background:var(--pu);color:#fff}.gy{background:var(--bd);color:var(--tx)}
+.prev{width:90px;height:90px;border-radius:10px;background:var(--bd) center/cover}
+.or{background:var(--or);color:#fff}.alert{background:#fff4e5;color:#7a3e00;border:2px solid var(--or);border-radius:14px;padding:14px;margin-bottom:16px}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--hd);color:#fff;padding:10px 18px;border-radius:99px;z-index:60;display:none}
+</style>
+</head>
+<body>
+<div class="stripe"></div>
+<header><div class="bar">
+<img src="logo.png" alt="Digi 3D Store"><span class="t" id="sn">DIGI 3D STORE</span><span class="sp"></span>
+<button class="cartbtn" id="cb" onclick="openCart(true)">🛒 Carrinho<b id="cc">0</b></button>
+</div></header>
+<div id="ov" onclick="openCart(false)"></div>
+<aside id="drawer"><div class="dh"><b>Seu carrinho</b><button class="gy sm" onclick="openCart(false)">Fechar ✕</button></div>
+<div class="di" id="ci"></div>
+<div class="df"><div class="tot"><span>Total</span><span id="tt">R$ 0,00</span></div>
+<input id="cn" placeholder="Seu nome (opcional)">
+<button class="wa" onclick="sendWA()">Enviar pedido pelo WhatsApp</button>
+<small style="color:var(--mut)">O pagamento é combinado direto no WhatsApp.</small></div></aside>
+<main id="app"></main>
+<footer><span id="ft">Digi 3D Store</span></footer>
+<div class="toast" id="ts"></div>
+
+<script>
+const KEY='digi3d_v1';
+const DEF={cfg:{name:'DIGI 3D STORE',wa:'5511999999999',pass:'admin123',hero:'Filamentos de qualidade para suas impressões 3D',low:5},
+cats:['PLA','PETG','ABS','TPU','Outros'],
+products:[
+{id:1,name:'Filamento PLA 1kg – Preto',cat:'PLA',price:89.9,stock:20,desc:'PLA 1,75mm, ótima adesão e acabamento.',img:''},
+{id:2,name:'Filamento PETG 1kg – Azul',cat:'PETG',price:109.9,stock:12,desc:'PETG 1,75mm, resistente e durável.',img:''},
+{id:3,name:'Filamento TPU 500g – Flexível',cat:'TPU',price:119.9,stock:6,desc:'TPU 95A, ideal para peças flexíveis.',img:''}]};
+let db;try{db=JSON.parse(localStorage.getItem(KEY))||DEF}catch(e){db=DEF}
+db.cfg={...DEF.cfg,...db.cfg};
+let cart={};try{cart=JSON.parse(localStorage.getItem(KEY+'c'))||{}}catch(e){}
+let cat='Todos',q='',auth=false;
+const $=id=>document.getElementById(id);
+const R=v=>'R$ '+Number(v||0).toFixed(2).replace('.',',').replace(/\B(?=(\d{3})+,)/g,'.');
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function save(){try{localStorage.setItem(KEY,JSON.stringify(db))}catch(e){toast('Sem espaço: use fotos menores ou exporte os dados')}}
+function saveCart(){try{localStorage.setItem(KEY+'c',JSON.stringify(cart))}catch(e){}}
+function toast(m){const t=$('ts');t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',2200)}
+function head(){$('sn').textContent=db.cfg.name;$('ft').textContent=db.cfg.name}
+
+function route(){head();location.hash==='#admin'?adminView():shopView();renderCart()}
+addEventListener('hashchange',route);
+
+function shopView(){
+ const cats=['Todos',...db.cats];
+ const list=db.products.filter(p=>(cat==='Todos'||p.cat===cat)&&(p.name+p.desc).toLowerCase().includes(q.toLowerCase()));
+ $('app').innerHTML=`<div class="hero"><h1>${esc(db.cfg.name)}</h1><p>${esc(db.cfg.hero)}</p></div>
+ <div class="tools"><input placeholder="Buscar produto..." value="${esc(q)}" oninput="q=this.value;grid()"></div>
+ <div class="chips">${cats.map(c=>`<button class="chip ${c===cat?'on':''}" onclick="cat='${esc(c)}';shopView()">${esc(c)}</button>`).join('')}</div><div id="g"></div>`;
+ grid(list)}
+function grid(l){
+ l=l||db.products.filter(p=>(cat==='Todos'||p.cat===cat)&&(p.name+p.desc).toLowerCase().includes(q.toLowerCase()));
+ $('g').innerHTML=l.length?`<div class="grid">${l.map(p=>`<div class="p"><div class="im" style="${p.img?`background-image:url('${p.img}')`:''}">${p.img?'':'Sem foto'}</div>
+ <div class="b"><span class="tag">${esc(p.cat)}</span><h3>${esc(p.name)}</h3><small>${esc(p.desc)}</small><span class="price">${R(p.price)}</span>
+ <button class="add" ${p.stock<=0?'disabled':''} onclick="add(${p.id})">${p.stock<=0?'Esgotado':'Adicionar ao carrinho'}</button></div></div>`).join('')}</div>`:'<div class="empty">Nenhum produto encontrado.</div>'}
+
+function add(id){const p=db.products.find(x=>x.id===id);if(!p)return;const n=(cart[id]||0)+1;if(n>p.stock){toast('Quantidade máxima em estoque');return}cart[id]=n;saveCart();renderCart();toast('Adicionado ✔')}
+function chg(id,d){const p=db.products.find(x=>x.id===id);const n=(cart[id]||0)+d;if(n<=0)delete cart[id];else if(p&&n<=p.stock)cart[id]=n;saveCart();renderCart()}
+function items(){return Object.keys(cart).map(id=>({p:db.products.find(x=>x.id==id),n:cart[id]})).filter(x=>x.p)}
+function renderCart(){const it=items();$('cc').textContent=it.reduce((a,x)=>a+x.n,0);
+ $('tt').textContent=R(it.reduce((a,x)=>a+x.n*x.p.price,0));
+ $('ci').innerHTML=it.length?it.map(({p,n})=>`<div class="ci"><div class="th" style="${p.img?`background-image:url('${p.img}')`:''}"></div><div class="n">${esc(p.name)}<br><b>${R(p.price)}</b></div><div class="q"><button onclick="chg(${p.id},-1)">−</button>${n}<button onclick="chg(${p.id},1)">+</button></div></div>`).join(''):'<div class="empty">Carrinho vazio</div>'}
+function openCart(o){$('drawer').classList.toggle('open',o);$('ov').classList.toggle('open',o)}
+function sendWA(){const it=items();if(!it.length){toast('Carrinho vazio');return}
+ const nm=$('cn').value.trim();let t=`Olá! Gostaria de fazer um pedido na ${db.cfg.name}:\n`+(nm?`Cliente: ${nm}\n`:'')+'\n';
+ it.forEach(({p,n})=>t+=`• ${n}x ${p.name} – ${R(p.price*n)}\n`);
+ t+=`\n*Total: ${R(it.reduce((a,x)=>a+x.n*x.p.price,0))}*`;
+ window.open('https://wa.me/'+db.cfg.wa.replace(/\D/g,'')+'?text='+encodeURIComponent(t),'_blank')}
+
+/* ---------- ADMIN ---------- */
+let ed=null,imgData='';
+function adminView(){
+ if(!auth){$('app').innerHTML=`<div class="panel" style="max-width:380px;margin:40px auto"><h2>🔒 Painel do administrador</h2><label>Senha</label><input type="password" id="pw" onkeydown="if(event.key==='Enter')login()"><br><br><button class="pu" style="width:100%" onclick="login()">Entrar</button><p><a href="#">← Voltar à loja</a></p></div>`;return}
+ const p=ed?db.products.find(x=>x.id===ed):null;imgData=p?p.img:'';
+ $('app').innerHTML=`<p><a href="#">← Ver loja</a> · <button class="gy sm" onclick="auth=false;adminView()">Sair</button></p>${lowBox()}
+ <div class="panel"><h2>${p?'Editar produto':'Novo produto'}</h2><div class="f">
+ <div><label>Nome</label><input id="fn" value="${esc(p?.name)}"></div>
+ <div><label>Categoria</label><select id="fc">${db.cats.map(c=>`<option ${p&&p.cat===c?'selected':''}>${esc(c)}</option>`).join('')}</select></div>
+ <div><label>Preço (R$)</label><input id="fp" type="number" step="0.01" value="${p?p.price:''}"></div>
+ <div><label>Estoque</label><input id="fs" type="number" value="${p?p.stock:''}"></div>
+ <div class="w"><label>Descrição</label><textarea id="fd" rows="3">${esc(p?.desc)}</textarea></div>
+ <div class="w"><label>Foto real do produto</label><input type="file" accept="image/*" onchange="pic(this)"><div class="prev" id="pv" style="margin-top:8px;${imgData?`background-image:url('${imgData}')`:''}"></div></div></div><br>
+ <button class="gr add" style="background:var(--gr);color:#fff" onclick="saveP()">${p?'Salvar alterações':'Adicionar produto'}</button>
+ ${p?'<button class="gy" onclick="ed=null;adminView()">Cancelar</button>':''}</div>
+ <div class="panel"><h2>Produtos (${db.products.length})</h2>${db.products.map(x=>`<div class="row"><div class="th" style="${x.img?`background-image:url('${x.img}')`:''}"></div><div class="n"><b>${esc(x.name)}</b><br><small>${esc(x.cat)} · ${R(x.price)} · estoque ${x.stock}</small></div><button class="bl sm" onclick="ed=${x.id};adminView();scrollTo(0,0)">Editar</button><button class="rd sm" onclick="delP(${x.id})">Excluir</button></div>`).join('')||'<div class="empty">Sem produtos</div>'}</div>
+ <div class="panel"><h2>Configurações</h2><div class="f">
+ <div><label>Nome da loja</label><input id="cn1" value="${esc(db.cfg.name)}"></div>
+ <div><label>WhatsApp (com DDI+DDD, ex: 5511999999999)</label><input id="cw" value="${esc(db.cfg.wa)}"></div>
+ <div class="w"><label>Frase do topo</label><input id="ch" value="${esc(db.cfg.hero)}"></div>
+ <div><label>Categorias (separadas por vírgula)</label><input id="cg" value="${esc(db.cats.join(', '))}"></div>
+ <div><label>Nova senha do painel</label><input id="cpw" type="password" placeholder="deixe vazio para manter"></div>
+ <div><label>Avisar quando o estoque for ≤</label><input id="clow" type="number" min="0" value="${db.cfg.low}"></div>
+</div><br>
+ <button class="pu" onclick="saveCfg()">Salvar configurações</button></div>
+ <div class="panel"><h2>Publicar e backup</h2><p style="color:var(--mut);margin-top:0">Depois de cadastrar ou alterar produtos, clique em Exportar. O arquivo <b>products.json</b> baixado deve substituir o do repositório no GitHub para os clientes verem as mudanças.</p><button class="gy" onclick="exp()">⬇ Exportar dados</button> <label style="display:inline-block" class="gy sm"><input type="file" accept=".json" style="display:none" onchange="imp(this)"><span style="cursor:pointer;padding:10px 16px;background:var(--bd);border-radius:10px;font-weight:600;color:var(--tx)">⬆ Importar dados</span></label></div>`}
+function login(){if($('pw').value===db.cfg.pass){auth=true;adminView();lowPopup()}else toast('Senha incorreta')}
+function pic(inp){const f=inp.files[0];if(!f)return;const r=new FileReader();r.onload=e=>{const im=new Image();im.onload=()=>{const m=800,s=Math.min(1,m/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*s;c.height=im.height*s;c.getContext('2d').drawImage(im,0,0,c.width,c.height);imgData=c.toDataURL('image/jpeg',.8);$('pv').style.backgroundImage=`url('${imgData}')`};im.src=e.target.result};r.readAsDataURL(f)}
+function saveP(){const name=$('fn').value.trim();if(!name){toast('Informe o nome');return}
+ const o={name,cat:$('fc').value,price:parseFloat($('fp').value)||0,stock:parseInt($('fs').value)||0,desc:$('fd').value.trim(),img:imgData};
+ if(ed){Object.assign(db.products.find(x=>x.id===ed),o)}else db.products.push({id:Date.now(),...o});
+ ed=null;save();toast('Produto salvo ✔');adminView();lowPopup()}
+function delP(id){if(!confirm('Excluir este produto?'))return;db.products=db.products.filter(x=>x.id!==id);delete cart[id];save();saveCart();adminView()}
+function saveCfg(){db.cfg.name=$('cn1').value.trim()||db.cfg.name;db.cfg.wa=$('cw').value.trim();db.cfg.hero=$('ch').value.trim();
+ const g=$('cg').value.split(',').map(s=>s.trim()).filter(Boolean);if(g.length)db.cats=g;if($('cpw').value)db.cfg.pass=$('cpw').value;db.cfg.low=parseInt($('clow').value)||0;save();head();toast('Configurações salvas ✔')}
+function exp(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(db)],{type:'application/json'}));a.download='products.json';a.click()}
+function imp(i){const f=i.files[0];if(!f)return;const r=new FileReader();r.onload=e=>{try{db=JSON.parse(e.target.result);save();toast('Importado ✔');adminView()}catch(x){toast('Arquivo inválido')}};r.readAsText(f)}
+function lowList(){return db.products.filter(p=>p.stock<=db.cfg.low)}
+const lowTxt=p=>`${p.name} — ${p.stock<=0?'ESGOTADO':p.stock+' un. restantes'}`;
+function lowBox(){const l=lowList();return l.length?`<div class="alert"><b>⚠ Estoque baixo (${l.length})</b><br>${l.map(p=>esc(lowTxt(p))).join('<br>')}</div>`:''}
+function lowPopup(){const l=lowList();if(!l.length)return;const o=$('lp');if(o)o.remove();const d=document.createElement('div');d.id='lp';d.style.cssText='position:fixed;inset:0;background:#0009;z-index:70;display:grid;place-items:center;padding:16px';d.innerHTML=`<div class="panel" style="max-width:380px;margin:0"><h2>⚠ Estoque acabando</h2>${l.map(p=>`<p style="margin:6px 0">${esc(lowTxt(p))}</p>`).join('')}<br><button class="pu" style="width:100%" onclick="this.closest('#lp').remove()">Entendi</button></div>`;document.body.appendChild(d)}
+(async()=>{let st=null;try{st=JSON.parse(localStorage.getItem(KEY))}catch(e){}
+if(!st){try{const r=await fetch('products.json',{cache:'no-store'});if(r.ok)st=await r.json()}catch(e){}}
+if(st){db=st;db.cfg={...DEF.cfg,...db.cfg}}
+route()})();
+</script>
+</body>
+</html>

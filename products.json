@@ -1,0 +1,45 @@
+{
+ "cfg": {
+  "name": "DIGI 3D STORE",
+  "wa": "5511999999999",
+  "pass": "admin123",
+  "hero": "Filamentos de qualidade para suas impressões 3D",
+  "low": 5
+ },
+ "cats": [
+  "PLA",
+  "PETG",
+  "ABS",
+  "TPU",
+  "Outros"
+ ],
+ "products": [
+  {
+   "id": 1,
+   "name": "Filamento PLA 1kg – Preto",
+   "cat": "PLA",
+   "price": 89.9,
+   "stock": 20,
+   "desc": "PLA 1,75mm, ótima adesão e acabamento.",
+   "img": ""
+  },
+  {
+   "id": 2,
+   "name": "Filamento PETG 1kg – Azul",
+   "cat": "PETG",
+   "price": 109.9,
+   "stock": 12,
+   "desc": "PETG 1,75mm, resistente e durável.",
+   "img": ""
+  },
+  {
+   "id": 3,
+   "name": "Filamento TPU 500g – Flexível",
+   "cat": "TPU",
+   "price": 119.9,
+   "stock": 6,
+   "desc": "TPU 95A, ideal para peças flexíveis.",
+   "img": ""
+  }
+ ]
+}
